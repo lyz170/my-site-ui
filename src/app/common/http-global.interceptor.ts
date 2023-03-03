@@ -18,7 +18,7 @@ export class HttpGlobalInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('token');
     var apiReq;
     if (req.url.startsWith('http')) {
-      apiReq = req;
+      apiReq = req.clone({ setHeaders: { 'Accept': 'application/json' } });
     } else {
       apiReq = req.clone({ url: `${baseUrl}${req.url}`, setHeaders: { 'Authorization': token ? token : '' } });
     }

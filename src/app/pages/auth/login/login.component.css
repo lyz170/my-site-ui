@@ -1,0 +1,28 @@
+.app-login-page {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.app-login-row {
+  display: flex !important;
+  justify-content: center!important;
+}
+
+.login-form {
+  min-width: 350px;
+  max-width: 400px;
+  margin-bottom: 20%;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
