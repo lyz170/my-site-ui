@@ -5,6 +5,12 @@ import { Router } from '@angular/router';
 export const TOKEN_NAME = 'token';
 export const USER_INFO = 'user-info';
 
+export interface TokenInfo {
+  access_token: string,
+  scope: string,
+  token_type: string,
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +25,8 @@ export class AuthService {
     private router: Router,
     private httpClient: HttpClient,
   ) {
-    if(localStorage.getItem(TOKEN_NAME)) {
+    var token = localStorage.getItem(TOKEN_NAME);
+    if(token !== '' && token !== 'undefined' && token !== null && typeof token !== undefined) {
       this.isLoggedIn = true;
     }
   }
@@ -34,8 +41,34 @@ export class AuthService {
     this.isLoggedIn = true;
   }
 
+  /**
+   * Logout Function
+   */
   logout = () => {
     this.httpClient.post('/logout', {observe: 'response'});
+    localStorage.setItem(TOKEN_NAME, '');
     this.isLoggedIn = false;
+    this.router.navigateByUrl('/login');
+  }
+
+  /**
+   * Github Login Function
+   */
+  gitHubLogin = () => {
+    console.log("Github login started.")
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=dd624e4f69e1cf794144&redirect_uri=http://localhost:4200/login/process'
+  }
+
+ /**
+   * Github Login Process (Get token) Function
+   */
+  githubLoginProcess = (authorizationCode: String) => {
+    var url = 'https://github.com/login/oauth/access_token?client_id=dd624e4f69e1cf794144&client_secret=435adcdfe49802abdd9940c29e42e607fe7a97f7&code=' + authorizationCode;
+    console.log(url);
+    this.httpClient.post<TokenInfo>(url, null).subscribe({
+      next: response => localStorage.setItem(TOKEN_NAME, response.access_token)
+    });
+    this.isLoggedIn = true;
+    this.router.navigateByUrl('/');
   }
 }
