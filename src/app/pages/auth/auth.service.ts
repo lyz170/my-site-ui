@@ -58,7 +58,7 @@ export class AuthService {
   gitHubLogin = () => {
     console.log("Github login started.")
     const githubRedirectUrl = environment["github-redirect-url"];
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=dd624e4f69e1cf794144&redirect_uri=https://127.0.0.1:4200/login/process'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=dd624e4f69e1cf794144&redirect_uri=' + githubRedirectUrl;
   }
 
  /**
