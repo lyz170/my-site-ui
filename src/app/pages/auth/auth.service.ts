@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 export const TOKEN_NAME = 'token';
 export const USER_INFO = 'user-info';
@@ -56,14 +57,16 @@ export class AuthService {
    */
   gitHubLogin = () => {
     console.log("Github login started.")
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=dd624e4f69e1cf794144&redirect_uri=http://localhost:4200/login/process'
+    const githubRedirectUrl = environment["github-redirect-url"];
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=dd624e4f69e1cf794144&redirect_uri=https://127.0.0.1:4200/login/process'
   }
 
  /**
    * Github Login Process (Get token) Function
    */
   githubLoginProcess = (authorizationCode: String) => {
-    var url = 'https://github.com/login/oauth/access_token?client_id=dd624e4f69e1cf794144&client_secret=435adcdfe49802abdd9940c29e42e607fe7a97f7&code=' + authorizationCode;
+    const githubLoginUrl = environment["github-login-url"];
+    var url = githubLoginUrl + '?client_id=dd624e4f69e1cf794144&client_secret=435adcdfe49802abdd9940c29e42e607fe7a97f7&code=' + authorizationCode;
     console.log(url);
     this.httpClient.post<TokenInfo>(url, null).subscribe({
       next: response => localStorage.setItem(TOKEN_NAME, response.access_token)

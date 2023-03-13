@@ -39,3 +39,11 @@ ng add ng-zorro-antd
 ? Choose template to create project: sidemenu
 
 ng serve --open
+
+## Environments
+
+For local, use 'localhost', frontend is 4200, backend is 8080, Gitbhub login url is 'https://github.com/login/oauth/access_token', need to create a new non-security page to test - "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp
+
+For DEV, use '127.0.0.1', frontend is 4200, backend is 8080, Gitbhub login url is 'http://127.0.0.1:4300/login/oauth/access_token' (Nginx proxy).
+
+For PROD, use '8.219.238.255', frontend is 443 (default https port), backend is 8080, Gitbhub login url is 'http://8.219.238.255:4300/login/oauth/access_token' (Nginx proxy).
